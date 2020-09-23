@@ -1,0 +1,127 @@
+@keyframes openning {
+  0% {
+    width: 30%;
+    height: 30%;
+    opacity: 0;
+  }
+  100% {
+    width: 80%;
+    height: 80%;
+    opacity: 100%;
+  }
+}
+
+.cartPage {
+  animation: openning 0.3s ease-out;
+  position: fixed;
+  width: 80%;
+  height: 80%;
+  right: 3vw;
+  bottom: 5vh;
+  margin: 0;
+  padding: 0;
+  z-index: 500;
+  background-color: #000000f8;
+  border-radius: 30px;
+  box-shadow: 2px 2px 10px #000000c5;
+  border-bottom-right-radius: 50px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  align-content: space-between;
+  flex-direction: column;
+}
+
+@media only screen and (max-width: 600px) {
+  .cartPage {
+    width: 90%;
+    height: 90%;
+  }
+}
+
+.cartTitle {
+  font-weight: 300;
+  letter-spacing: 3px;
+  font-size: 0.75rem;
+  color: #ffffff;
+}
+.prodsList {
+  flex: 0.8;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.prod {
+  width: 70vw;
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+  flex-direction: row;
+  height: 2rem;
+  font-size: 24px;
+  color: #ffffff;
+  font-size: 500;
+}
+
+.btngrp {
+  width: 50%;
+}
+
+.checkoutbtn {
+  transition: 0.4s ease;
+  color: #000000;
+  background-color: #ffffff;
+  font-weight: 300;
+  border: none;
+  margin-bottom: 0;
+  width: 100%;
+}
+
+.checkoutbtn:hover {
+  color: #ffffff;
+  background-color: #000000;
+  font-weight: 600;
+  border-bottom-color: #ffffff;
+  border-bottom-width: 3px;
+}
+
+.underbtn {
+  height: 2px;
+  background-color: #ffffff;
+  margin-bottom: 20px;
+  margin-top: 0;
+}
+
+.QteC {
+  height: 23px;
+  font-size: 20px;
+  width: 40px;
+  outline: none;
+  background-color: #070707e8;
+  color: #ffffff;
+  border: none;
+  text-align: center;
+}
+
+.Deletebtn {
+  transition: 0.4s ease;
+  color: #d42222;
+  font-weight: 300;
+  margin: 0;
+  font-size: 50px;
+  transform: translateY(-10px) rotate(45deg);
+}
+.Deletebtn:hover {
+  cursor: pointer;
+  color: #f80000;
+}
+.total {
+  color: #eeeeee;
+  padding-left: 70%;
+  font-weight: 500;
+}

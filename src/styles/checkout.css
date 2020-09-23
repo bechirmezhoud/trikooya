@@ -1,0 +1,140 @@
+.checkoutPage {
+  position: fixed;
+  width: 90%;
+  height: 90%;
+  right: 5vw;
+  bottom: 5vh;
+  margin: 0;
+  padding: 0;
+  z-index: 505;
+  background-color: #000000f8;
+  border-radius: 30px;
+  box-shadow: 2px 2px 10px #000000c5;
+  border-bottom-right-radius: 50px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  align-content: space-between;
+  flex-direction: column;
+}
+.outer {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 504;
+  background-color: #0000009c;
+  top: 0;
+}
+.checkoutPage .cartTitle {
+  font-size: 25px;
+}
+.CheckoutForm {
+  width: 95%;
+}
+.inputgrp {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  height: 25px;
+  margin-top: 20px;
+  font-size: 2vw;
+}
+.inputgrp .label {
+  background-color: #ffffff;
+  height: 35px;
+  padding-left: 30px;
+  padding-right: 10px;
+  margin: 0;
+  border-top-left-radius: 100px;
+  border-bottom-left-radius: 100px;
+  color: #000000;
+  font-weight: 600;
+  font-size: 0.8em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.inputgrp input {
+  flex: 0.8;
+  width: 90%;
+  height: 29px;
+  outline: none;
+  text-indent: 5px;
+  font-weight: 600;
+  border: 2px solid #ffffff;
+  border-top-right-radius: 100px;
+  border-bottom-right-radius: 100px;
+  font-size: 1em;
+  background-color: #000000;
+  color: #ffffff;
+}
+
+.inputgrp select {
+  flex: 0.8;
+  width: 100%;
+  height: 35px;
+  outline: none;
+  text-indent: 5px;
+  font-weight: 600;
+  border: 2px solid #ffffff;
+  border-top-right-radius: 100px;
+  border-bottom-right-radius: 100px;
+  font-size: 1em;
+  background-color: #000000;
+  color: #ffffff;
+}
+
+.checkoutPage span {
+  padding-left: 43%;
+  color: #a50000;
+  font-size: 20px;
+  font-weight: 400;
+  font-variant-caps: all-small-caps;
+}
+
+.checkoutPage .btngrp {
+  width: 70%;
+}
+.adressGrp {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  width: 100%;
+}
+
+.adressGrp .inputgrp {
+  width: 44%;
+}
+
+.closebtn {
+  position: absolute;
+  transition: 1s ease;
+  top: 2%;
+  right: 2%;
+  color: #ffffff;
+  font-weight: 200;
+  transform: rotate(45deg);
+  margin: 0;
+  font-size: 50px;
+}
+.closebtn:hover {
+  transform: rotate(225deg);
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 600px) {
+  .inputgrp {
+    font-size: 4vw;
+  }
+  .adressGrp .inputgrp .label {
+    display: none;
+  }
+  .adressGrp .inputgrp select {
+    border-radius: 100px;
+    color: #000000;
+    background-color: #ffffff;
+  }
+}
