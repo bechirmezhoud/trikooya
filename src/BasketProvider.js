@@ -22,7 +22,7 @@ function reducer(state, action) {
             basketprod.size === action.payload.size
         ).length === 0
       ) {
-        nS.push({ ...action.payload, QteC: 1 });
+        nS.push(action.payload);
       } else {
         nS[
           state.findIndex(
@@ -30,7 +30,7 @@ function reducer(state, action) {
               prodaux.name === action.payload.name &&
               prodaux.size === action.payload.size
           )
-        ].QteC++;
+        ].QteC+=action.payload.QteC;
       }
       return nS;
 

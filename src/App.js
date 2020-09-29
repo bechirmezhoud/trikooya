@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import "./styles/styles.css";
 import {
-  useStorage,
   useFirestore,
   useFirestoreCollectionData
 } from "reactfire";
@@ -9,19 +8,17 @@ import { BasketContext } from "./BasketProvider";
 
 import Cart from "./components/Cart";
 import CheckOut from "./components/CheckOut";
+import Header from "./components/Header";
+import Product from "./components/Product";
 
 export default function App() {
-  const [src, setSrc] = useState(null); //contain the cover image link
-  const [size, setSize] = useState(null); //the current selected size
   const [products, setProducts] = useState([]); //products from firestore
   const [showModal, setShowModal] = useState(false); //show the ADD ITEM modal
   const [showCart, setShowCart] = useState(false); //show the cart
   const [showCheckout, setShowCheckout] = useState(false); //show the checkout page
   const [basket, dispatch, sum] = useContext(BasketContext); //the Basket context
   const [done, setDone] = useState(false); //if the order is SUBMITTED or not
-  const [added, setadded] = useState(null); //handle add product animation
-  const [srclogo, setSrclogo] = useState(null); //SRC logo from DB
-
+  const [product, setProduct] = useState(null); //Product object to show in details panel
   //GET the products list from firestore
   const prods = useFirestoreCollectionData(
     useFirestore().collection("products")
@@ -29,18 +26,7 @@ export default function App() {
 
   useEffect(() => setProducts(prods), [prods]);
 
-  //imprort the cover from firebase
-  useStorage()
-    .ref("images/cover.jpg")
-    .getDownloadURL()
-    .then((url) => setSrc(url));
 
-  //import LOGO
-  //imprort the cover from firebase
-  useStorage()
-    .ref("images/logo.png")
-    .getDownloadURL()
-    .then((url) => setSrclogo(url));
 
   //handle the animation and the reset of the app after submitting the order
   const handleDone = () => {
@@ -52,6 +38,13 @@ export default function App() {
 
   return (
     <div className="App">
+    {product && <Product handleDone={()=>{
+                  //Show ADD ITEM modal for 2s and add the item to the Basket
+                  setShowModal(true);
+                  setTimeout(() => {
+                    setShowModal(false);
+                  }, 2000);
+                }} handleClose={() => setProduct(null)} prod={product} />}
       {showModal && <div className="modal">ITEM ADDED</div>}
       {done && (
         <div className="outer">
@@ -79,106 +72,40 @@ export default function App() {
       {basket.length > 0 && showCart && (
         <Cart handleCheckout={() => setShowCheckout(true)} />
       )}
-      <img className="logoT" alt="logo" src={srclogo} />
-      <div style={{ background: `url(${src})` }} className="cover" />
-
-      <h1>DOUBLE TAP ON THE PRODUCT YOU LIKE.</h1>
-      <h3>TO ADD IT TO YOUR CART </h3>
-      <h3 className="selectSize">SELECT YOUR SIZE.</h3>
-      <div className={!size ? "size warning" : "size"}>
-        <div
-          className={`choix S ${size === "S" ? "active" : ""} `}
-          onClick={() => setSize("S")}
-        >
-          S
-        </div>
-        <div
-          className={`choix M ${size === "M" ? "active" : ""} `}
-          onClick={() => setSize("M")}
-        >
-          M
-        </div>
-        <div
-          className={`choix L ${size === "L" ? "active" : ""} `}
-          onClick={() => setSize("L")}
-        >
-          L
-        </div>
-        <div
-          className={`choix XL ${size === "XL" ? "active" : ""} `}
-          onClick={() => setSize("XL")}
-        >
-          XL
-        </div>
-        <div
-          className={`choix XXL ${size === "XXL" ? "active" : ""} `}
-          onClick={() => setSize("XXL")}
-        >
-          XXL
-        </div>
-      </div>
+     <Header />
       <div className="products">
         {products
-          .filter((prod) => (size ? prod.Qte[size] > 0 : true))
           .map((prod) => (
             <div
               className="productbox"
               key={prod.name}
               onDoubleClick={
-                size && //CHECK IF A SIZE WAS SELECTED
-                (() => {
+                () => {
                   //Show ADD ITEM modal for 2s and add the item to the Basket
                   setShowModal(true);
-                  setadded(prod.name);
-                  dispatch({ type: "ADD", payload: { ...prod, size } });
+                  dispatch({ type: "ADD", payload: { ...prod } });
                   setTimeout(() => {
                     setShowModal(false);
-                    setadded(null);
                   }, 2000);
-                })
+                }
               }
             >
-              <div className="AddStuff">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  className={added === prod.name ? "added" : ""}
-                >
-                  <path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z" />
-                </svg>
-                <div className="product_price">
-                  <span
-                    className="plus_prod"
-                    onClick={
-                      size && //CHECK IF A SIZE WAS SELECTED
-                      (() => {
-                        //Show ADD ITEM modal for 2s and add the item to the Basket
-                        setShowModal(true);
-                        setadded(prod.name);
-                        dispatch({ type: "ADD", payload: { ...prod, size } });
-                        setTimeout(() => {
-                          setShowModal(false);
-                          setadded(null);
-                        }, 2000);
-                      })
-                    }
-                  >
-                    +
-                  </span>
-                  <p>
-                    {prod.price.slice(0, prod.price.indexOf("."))}
-                    <span className="frac">
-                      {prod.price.slice(prod.price.indexOf("."))}
-                    </span>
-                    DT
-                  </p>
-                </div>
-              </div>
+               
               <img
                 alt={prod.name}
                 className="product_img"
                 src={prod.imageUrl}
               />
+              <div className="details">
+               <p>
+                    {prod.price.slice(0, prod.price.indexOf("."))}
+                    <span>
+                      {prod.price.slice(prod.price.indexOf("."))}
+                    </span>
+                    DT
+                </p>
+                <p className="showDetails"onClick={()=> setProduct(prod) }>ADD TO CART</p>
+              </div>
             </div>
           ))}
       </div>
